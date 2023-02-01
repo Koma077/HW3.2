@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -32,7 +33,7 @@ public class StudentService {
 
     }
 
-    public Collection<Student> findByAge(int age) {
-        return studentRepository.findAll();
+    public List<Student> findByAge(int age) {
+        return studentRepository.findByAge(age);
     }
 }
