@@ -17,9 +17,7 @@ public class Faculty {
     private String name;
     private String color;
     @OneToMany(mappedBy = "faculty")
-    @JsonIgnore
     private Collection<Student> students;
-
 
 
     @Override
@@ -57,5 +55,8 @@ public class Faculty {
 
     public void setColor(String color) {
         this.color = color;
+    }
+    public Collection<Student> getStudents() {
+        return students;
     }
 }

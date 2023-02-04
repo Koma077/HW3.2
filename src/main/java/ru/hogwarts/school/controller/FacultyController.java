@@ -56,12 +56,13 @@ public class FacultyController {
     }
 
     @GetMapping
-    public Collection<Faculty> findeFacultyByNameOrColor(@RequestParam(required = false) String name,
-                                                         @RequestParam(required = false) String color) {
-        return facultyService.findeFacultyByNameOrColor(name, color);
+    public Collection<Faculty> findFacultiesByColorOrName(@RequestParam(required = false) String color,
+                                                          @RequestParam(required = false) String name) {
+        return facultyService.findFacultiesByColorOrName(color, name);
     }
+
     @GetMapping
-    public Collection<Faculty> findFacultyByStudent(@RequestParam Long id) {
-        return facultyService.findFacultyByStudent(id);
+    public Faculty findFacultyByStudent(@RequestParam Long id) {
+        return facultyService.findeFacultyByStudent(id);
     }
 }
