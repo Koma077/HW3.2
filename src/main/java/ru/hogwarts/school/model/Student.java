@@ -15,6 +15,7 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
