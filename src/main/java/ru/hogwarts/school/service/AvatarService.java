@@ -20,7 +20,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarService {
-    @Value("${student.cover.dir.path}")
+    @Value("${Avatar.cover.dir.path}")
     private String coversDir;
 
     private final StudentService studentService;
@@ -32,7 +32,7 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
-    public Optional<Avatar> findeAvatar(Long id) {
+    public Optional<Avatar> findAvatar(Long id) {
         return avatarRepository.findAvatarByStudentId(id);
     }
 
@@ -42,7 +42,7 @@ public class AvatarService {
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
 
-        try(InputStream is = file.getInputStream()) {
+        try (InputStream is = file.getInputStream()) {
             OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
             BufferedInputStream bis = new BufferedInputStream(is, 1024);
             BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
@@ -58,8 +58,9 @@ public class AvatarService {
         avatarRepository.save(avatar);
 
     }
+
     public Collection<Avatar> getAvatarPage(Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page -1 , size);
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
         return avatarRepository.findAll(pageRequest).getContent();
     }
 

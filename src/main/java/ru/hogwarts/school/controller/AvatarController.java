@@ -5,17 +5,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.service.AvatarService;
+//import ru.hogwarts.school.service.AvatarService;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,18 +32,19 @@ public class AvatarController {
 
     @GetMapping(value = "{id}/avatar-from-db")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
-        Optional<Avatar> avatar = avatarService.findeAvatar(id);
+        Optional<Avatar> avatar = avatarService.findAvatar(id);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.parseMediaType(avatar.orElseThrow().getMediaType()));
         httpHeaders.setContentLength(avatar.get().getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(avatar.get().getData());
 
     }
+
     @GetMapping(value = "{id}/avatar-from-file")
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        Optional<Avatar> avatar = avatarService.findeAvatar(id);
+        Optional<Avatar> avatar = avatarService.findAvatar(id);
         Path pathFile = Path.of(avatar.get().getFilePath());
-        try(InputStream is = Files.newInputStream(pathFile)) {
+        try (InputStream is = Files.newInputStream(pathFile)) {
             OutputStream os = response.getOutputStream();
             response.setStatus(200);
             response.setContentType(avatar.get().getMediaType());
@@ -53,9 +52,10 @@ public class AvatarController {
             is.transferTo(os);
         }
     }
+
     @GetMapping(value = "page-of-avatars")
-    public Collection<Avatar> getAvatarPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size){
-        return avatarService.getAvatarPage(page,size);
+    public Collection<Avatar> getAvatarPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        return avatarService.getAvatarPage(page, size);
     }
 
 }

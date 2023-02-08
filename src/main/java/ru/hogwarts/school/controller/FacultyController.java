@@ -63,7 +63,7 @@ public class FacultyController {
     }
 
     @GetMapping("findFacultyByStudentId")
-    public Collection<Student> findeFacultyByStudentId(@RequestParam String name){
+    public Collection<Student> findeFacultyByStudentId(@RequestParam String name) {
         return facultyService.findeFacultyByStudentId(name);
     }
 }
