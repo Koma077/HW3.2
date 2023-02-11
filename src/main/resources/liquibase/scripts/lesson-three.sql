@@ -11,4 +11,3 @@ DROP INDEX student_name_index;
 
 -- changeset dakulov:4
 DROP INDEX faculty_name_color_index;
-
