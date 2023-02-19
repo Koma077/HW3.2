@@ -30,7 +30,7 @@ public class AvatarService {
     private final AvatarRepository avatarRepository;
     private final FacultyRepository facultyRepository;
 
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+    private Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
 
 

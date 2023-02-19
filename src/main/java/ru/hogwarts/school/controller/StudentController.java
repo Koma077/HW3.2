@@ -10,6 +10,8 @@ import ru.hogwarts.school.service.StudentService;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/student")
@@ -86,5 +88,18 @@ public class StudentController {
         return studentService.getFiveStudents();
     }
 
+    @GetMapping("students-by-letter-a")
+    public List<String> getStudentsWhoHaveTheLetterA() {
+        return studentService.getStudentsWhoHaveTheLetterA();
+    }
 
+    @GetMapping("average-age")
+    public OptionalDouble getAverageAgeOfAllStudents() {
+        return studentService.getAverageAgeOfAllStudents();
+    }
+
+    @GetMapping("sum")
+    public int getSum(){
+        return Stream.iterate(1, a -> a + 1).limit(1_000_000).parallel().mapToInt(Integer::intValue).sum();
+    }
 }

@@ -9,12 +9,15 @@ import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.List;
 
+import java.util.OptionalDouble;
+
+
 @Service
 public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -73,6 +76,17 @@ public class StudentService {
     public List<Student> getFiveStudents() {
         logger.debug("getFiveStudents");
         return studentRepository.getFiveStudents();
+    }
+
+    public List<String> getStudentsWhoHaveTheLetterA() {
+        List<Student> students = studentRepository.findAll();
+        return students.stream().parallel().filter(s -> s.getName().substring(0, 1).equalsIgnoreCase("a"))
+                .map(s -> s.getName().toUpperCase()).toList();
+    }
+
+    public OptionalDouble getAverageAgeOfAllStudents() {
+        List<Student> students = studentRepository.findAll();
+        return students.stream().parallel().mapToDouble(Student::getAge).average();
     }
 
 
