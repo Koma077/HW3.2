@@ -3,10 +3,12 @@ package ru.hogwarts.school.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.context.Theme;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.OptionalDouble;
@@ -87,6 +89,44 @@ public class StudentService {
     public OptionalDouble getAverageAgeOfAllStudents() {
         List<Student> students = studentRepository.findAll();
         return students.stream().parallel().mapToDouble(Student::getAge).average();
+    }
+
+
+    public void  getStudentsByParallelThreads(){
+        List<Student> students = new ArrayList<>();
+        students.addAll(studentRepository.findAll());
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+        new Thread(() -> {
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
+        }).start();
+        new Thread(() -> {
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
+        }).start();
+    }
+
+
+    public synchronized void getStudentsBySynchronizedParallelThreads() {
+        List<Student> students = new ArrayList<>();
+        students.addAll(studentRepository.findAll());
+        printStudent(students.get(0));
+        printStudent(students.get(1));
+        new Thread(() -> {
+            printStudent(students.get(2));
+            printStudent(students.get(3));
+        }).start();
+        new Thread(() -> {
+            printStudent(students.get(4));
+            printStudent(students.get(5));
+        }).start();
+    }
+
+    public void printStudent(Student student){
+        synchronized (studentRepository){
+            System.out.println(student);
+        }
     }
 
 

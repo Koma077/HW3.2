@@ -99,7 +99,17 @@ public class StudentController {
     }
 
     @GetMapping("sum")
-    public int getSum(){
+    public int getSum() {
         return Stream.iterate(1, a -> a + 1).limit(1_000_000).parallel().mapToInt(Integer::intValue).sum();
+    }
+
+    @GetMapping("six-students-by-parallel-threads")
+    public void getStudentsByParallelThreads() {
+        studentService.getStudentsByParallelThreads();
+    }
+
+    @GetMapping("six-students-by-synchronized-parallel-threads")
+    public void getStudentsBySynchronizedParallelThreads(){
+        studentService.getStudentsBySynchronizedParallelThreads();
     }
 }
